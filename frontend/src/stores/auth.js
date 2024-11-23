@@ -119,5 +119,40 @@ export const useAuthStore = defineStore('auth', {
         this.status = 'idle'; 
       }
     },
+
+    async resetPassword(token, newPassword, confirmPassword) {
+      this.status = 'loading';
+      this.error = null;
+
+      if (newPassword !== confirmPassword) {
+        this.error = "Passwords do not match!";
+        toast.error(this.error);
+        this.status = 'failed';
+        return;
+      }
+
+      try {
+        // API call to reset password
+        const response = await axios.post(`/api/auth/reset-password/${token}`, {
+          password:newPassword,
+        });
+
+        if (response.status === 200) {
+          this.status = 'success';
+          toast.success("Password reset successfully!");
+        } else {
+          this.error = response.data?.error || "Failed to reset password.";
+          this.status = 'failed';
+          toast.error(this.error);
+        }
+      } catch (err) {
+        this.error = err.response?.data?.error || "Failed to reset password.";
+        this.status = 'failed';
+        toast.error(this.error);
+      } finally {
+        this.status = this.status === 'failed' ? 'idle' : this.status;
+      }
+    },
+
   },
 });

@@ -31,8 +31,8 @@ export default {
     const authStore = useAuthStore();
     const users = userStore.users;
     const isLoading = userStore.isLoading;
-    const currentUser = authStore?.user; // Get the current user
-    const isAdmin = currentUser?.role === "ADMIN"; // Check if the user is an admin
+    const currentUser = authStore?.user; 
+    const isAdmin = currentUser?.role === "ADMIN"; 
 
     onMounted(async () => {
       await userStore.fetchUsers();
@@ -47,7 +47,7 @@ export default {
 
     // Update user (for regular users)
     const updateUser = async (userId, user) => {
-      await userStore.updateUser(userId, user); // Call Pinia store action
+      await userStore.updateUser(userId, user); 
       console.log("Updated user", user);
     };
 
@@ -57,7 +57,7 @@ export default {
       deleteUser,
       updateUser,
       currentUser,
-      isAdmin, // Make sure isAdmin is accessible for conditional rendering
+      isAdmin,
     };
   },
 };

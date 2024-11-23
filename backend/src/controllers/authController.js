@@ -11,7 +11,7 @@ const signup = async (req, res, next) => {
 
     // missing fields case 1
     if (!fullName || !email || !password || !confirmPassword) {
-      res.status(400); // You can set the status here
+      res.status(400); 
       throw new Error("Please fill in all fields");
     }
 
@@ -131,7 +131,7 @@ const getMe = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
   const { currentPassword, newPassword } = req.body;
-  const userId = req.user.id; // Assuming user ID is stored in the JWT payload
+  const userId = req.user.id; 
   
   try {
     // Find the user by their ID
@@ -164,7 +164,7 @@ const changePassword = async (req, res, next) => {
 };
 
 // generate reset password link
-const resetRequest = async (req, res) => {
+const resetRequest = async (req, res, next) => {
   const { email } = req.body;
 
   try {
@@ -178,8 +178,13 @@ const resetRequest = async (req, res) => {
     // Generate a reset token with user id and email, expires in 15 minutes
     const resetToken = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '15m' });
 
+    const resetHtml = `
+      <p>This request has been made to reset credentials associated with this account <strong>${email}</strong></p>
+      <p>Please click the following link to reset your password:</p>
+      <a href="${process.env.CLIENT_URL}/reset-password?token=${resetToken}">Reset Password</a>
+    `;
     // Send reset email
-    await sendResetEmail(email, resetToken);
+    await sendEmail(email,  "Forget Password", html=resetHtml, next);
 
     res.status(200).json({ message: 'Password reset email sent' });
   } catch (error) {
@@ -192,6 +197,7 @@ const resetRequest = async (req, res) => {
 const resetPassword = async (req, res, next) => {
   const { token } = req.params;
   const { password } = req.body;
+  console.log(password,' pass res')
 
   try {
     // Verify the token
@@ -207,15 +213,19 @@ const resetPassword = async (req, res, next) => {
     });
 
     res.status(200).json({ message: 'Password has been reset successfully' });
-  } catch (error) {
+  }catch (error) {
     console.error('Error in resetPassword:', error);
 
-    // Custom error handling
+    // Custom error handling for TokenExpiredError
     if (error.name === 'TokenExpiredError') {
-      return next({ status: 400, error: 'Token has expired. Please request a new password reset.' });
+      res.status(400);
+      next(new Error('Token has expired. Please request a new password reset.'))
     }
+    
+    // Custom error handling for invalid token
     if (error.name === 'JsonWebTokenError') {
-      return next({ status: 400, error: 'Invalid token. Please request a new password reset.' });
+      res.status(400);
+      next(new Error('Invalid token. Please request a new password reset.'))
     }
 
     // Generic server error
@@ -231,6 +241,10 @@ const inviteNewUser = async (req, res, next) => {
   const from_email=  req.user.email;
 
   try {
+    if (!email) {
+      res.status(400); // You can set the status here
+      throw new Error("Please provide a valid Email");
+    }
     // Generate a random password
     const password = Math.random().toString(36).slice(-8);
 
@@ -255,7 +269,7 @@ const inviteNewUser = async (req, res, next) => {
 
     // Send invitation email
     const invitationEmailHtml = `
-      <p>You have been invited to join our platform.</p>
+      <p>You have been invited by ${from_email} to join Easy Manage.</p>
       <p><strong>Your Credentials:</strong></p>
       <p>Email: ${email}</p>
       <p>Password: ${password}</p>
@@ -264,11 +278,10 @@ const inviteNewUser = async (req, res, next) => {
     `;
 
     await sendEmail(
-      from_email,
       email, // Recipient email
       "Invitation to Join Our Platform", // Subject
       invitationEmailHtml, // Email body (HTML)
-      res
+      next
     );
 
     res.status(201).json({ message: "User invited successfully" });

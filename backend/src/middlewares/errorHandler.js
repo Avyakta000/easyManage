@@ -6,7 +6,7 @@ const notFound = (req, res, next) => {
 
 const errorHandler = (err, req, res, next) => {
 
-    // Set the status code based on the error or default to 500
+    // set the status code based on the error or default to 500
     const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
     const errMsg = err.message || "Internal Server Error";
     res.status(statusCode).json({

@@ -9,9 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.1",
-    "@fortawesome/free-solid-svg-icons": "^6.7.1",
-    "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@heroicons/vue": "^2.2.0",
     "axios": "^1.7.7",
     "pinia": "^2.2.6",
     "vue": "^3.5.12",

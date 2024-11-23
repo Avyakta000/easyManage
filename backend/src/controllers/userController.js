@@ -50,19 +50,20 @@ const searchUser = async (req, res, next) => {
 // update user record (authenticated user or admin)
 const updateUser = async (req, res, next) => {
     try {
-      const { id } = req.params; // The user ID to update
-      const { fullName, email, role } = req.body; // The data to be updated
+      const { id } = req.params; //  user ID to update
+      const { fullName, email, role } = req.body; //  data to be updated
       console.log(id, fullName)
       // Check if the authenticated user is updating their own record or if the user is an admin
       if (req.user.id !== id && req.user.role !== "ADMIN") {
-        res.status(403).json({ error: "Forbidden: You can only update your own record or be an admin" });
-        return; // Ensure the function exits after sending the response
+        res.status(403)
+        throw new Error("Forbidden: You can only update your own record or be an admin")
+       
       }
   
-      // Validate if any fields are provided for updating
+      // Validating if any fields are provided for updating
       if (!fullName && !email && !role) {
-        res.status(400).json({ error: "No data provided to update" });
-        return; // Ensure the function exits after sending the response
+        res.status(400)
+        throw new Error("No data provided to update")
       }
   
       // Prepare the data for updating

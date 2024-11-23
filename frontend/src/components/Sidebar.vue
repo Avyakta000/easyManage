@@ -54,8 +54,8 @@ export default {
     const auth = useAuthStore();
     const router = useRouter();
     const authStore = useAuthStore();
-    const currentUser = authStore?.user; // Get the current user
-    const isAdmin = currentUser?.role === "ADMIN"; // Check if the user is an admin
+    const currentUser = authStore?.user; // get the current user
+    const isAdmin = currentUser?.role === "ADMIN"; // check if the user is an admin
 
 
     const handleLogout = () => {

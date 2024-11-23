@@ -20,7 +20,6 @@
     <UserInviteModal
       :isInviteModalOpen="isInviteModalOpen"
       :closeInviteModal="closeInviteModal"
-      :inviteUser="inviteUser"
     />
   </div>
 </template>
@@ -32,9 +31,8 @@ import { useAuthStore } from "@/stores/auth";
 import { useRoute } from "vue-router";
 import Sidebar from "@/components/Sidebar.vue";
 import Header from "@/components/Header.vue";
-import UserList from "@/components/UserList.vue";
 import UserInviteModal from "@/components/UserInviteModal.vue";
-import UserInfo from "@/components/UserInfo.vue"; // Import the UserInfo component
+import UserInfo from "@/components/UserInfo.vue"; 
 
 export default {
   name: "Dashboard",
@@ -42,9 +40,8 @@ export default {
   components: {
     Sidebar,
     Header,
-    UserList,
     UserInviteModal,
-    UserInfo, // Register the UserInfo component
+    UserInfo, 
   },
 
   setup() {
@@ -54,12 +51,11 @@ export default {
     const users = userStore.users;
     const isLoading = userStore.isLoading;
     const isInviteModalOpen = ref(false);
-    const inviteEmail = ref("");
-    const currentUser = authStore?.user; // Get the current user
-    const isAdmin = currentUser?.role === "ADMIN"; // Check if the user is an admin
+    const currentUser = authStore?.user; 
+    const isAdmin = currentUser?.role === "ADMIN";
 
     const isDashboardRoute = computed(() => {
-      return route.path === "/dashboard"; // Only show the welcome message if on /dashboard
+      return route.path === "/dashboard"; 
     });
 
     onMounted(async () => {
@@ -77,14 +73,6 @@ export default {
       isInviteModalOpen.value = false;
     };
 
-    // Invite user by email
-    const inviteUser = async (email) => {
-      console.log(inviteEmail.value, email, "invite email");
-      await userStore.inviteUser(email);
-      inviteEmail.value = "";
-      closeInviteModal();
-    };
-
     // Delete user
     const deleteUser = async (userId) => {
       await userStore.deleteUser(userId);
@@ -100,14 +88,12 @@ export default {
       users: userStore.users,
       isLoading,
       isInviteModalOpen,
-      inviteEmail,
       openInviteModal,
       closeInviteModal,
-      inviteUser,
       deleteUser,
       updateUser,
       currentUser,
-      isAdmin, // Make sure isAdmin is accessible for conditional rendering
+      isAdmin, 
       isDashboardRoute
     };
   },

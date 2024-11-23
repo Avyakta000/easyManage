@@ -1,11 +1,12 @@
 <template>
-  <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-gray-700 mb-4">Change Password</h2>
-    <form @submit.prevent="changePassword">
-      <div class="grid grid-cols-1 gap-6">
+  <div class="flex h-full flex-col justify-center items-center bg-gray-700 rounded-lg">
+
+    <h2 class="text-2xl font-bold text-gray-50 mb-4">Change Password</h2>
+    <form @submit.prevent="changePassword" class="w-full">
+      <div class="max-w-lg mx-auto space-y-4">
         <!-- Current Password -->
-        <div>
-          <label class="block text-gray-600 font-medium">Current Password</label>
+        <div class="space-y-2">
+          <label class="block text-gray-50 font-medium">Current Password</label>
           <input
             v-model="password.currentPassword"
             type="password"
@@ -15,8 +16,8 @@
         </div>
         
         <!-- New Password -->
-        <div>
-          <label class="block text-gray-600 font-medium">New Password</label>
+        <div class="space-y-2">
+          <label class="block text-gray-50 font-medium">New Password</label>
           <input
             v-model="password.newPassword"
             type="password"
@@ -26,8 +27,8 @@
         </div>
         
         <!-- Confirm New Password -->
-        <div>
-          <label class="block text-gray-600 font-medium">Confirm New Password</label>
+        <div class="space-y-2">
+          <label class="block text-gray-50 font-medium">Confirm New Password</label>
           <input
             v-model="password.confirmPassword"
             type="password"
@@ -35,41 +36,42 @@
             placeholder="Confirm new password"
           />
         </div>
+        <!-- Error Message -->
+        <p v-if="error" class="text-red-600 mt-2">{{ error }}</p>
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+          :disabled="isLoading"
+        >
+          {{isLoading ? "updating..." : "Change Password"}}
+        </button>
       </div>
 
-      <!-- Error Message -->
-      <p v-if="error" class="text-red-600 mt-2">{{ error }}</p>
 
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-      >
-        Change Password
-      </button>
     </form>
   </div>
 </template>
 
 <script>
-import { useToast } from 'vue-toastification';
 import { ref } from "vue";
 import axios from "axios"; 
+import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'; 
 
 export default {
   name: "ChangePassword",
   setup() {
     const toast = useToast();
-    const router = useRouter(); // Use the Vue Router instance
-
-
+    const router = useRouter(); 
+    
     const password = ref({
       currentPassword: "",
       newPassword: "",
       confirmPassword: "",
     });
     const error = ref("");
+    const isLoading = ref(false);
 
     const changePassword = async () => {
       // Clear any previous errors
@@ -80,6 +82,7 @@ export default {
         error.value = "New passwords do not match!";
         return;
       }
+      isLoading.value = true;
 
       try {
         // Make API call to backend to change the password
@@ -94,14 +97,14 @@ export default {
           toast.success("Password changed successfully!");
         }
         router.push('/dashboard')
-        // Show success toast after successful password change
       } catch (err) {
-        // Handle error (e.g., wrong current password)
           toast.error("Error changing password!");
+      } finally{
+        isLoading.value = false;
       }
     };
 
-    return { password, changePassword, error };
+    return { password, changePassword, error, isLoading };
   },
 };
 </script>
