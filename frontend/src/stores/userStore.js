@@ -95,5 +95,18 @@ export const useUserStore = defineStore("user", {
         this.isLoading = false;
       }
     },
+
+    // Search a User
+    async searchUsers(query) {
+      try {
+        const response = await axios.get(`/api/users/search?searchQuery=${query}`);
+        return response.data;
+      } catch (error) {
+        console.error("Error searching users:", error);
+        // this.error=error?.response?.data?.error
+        throw error;
+      }
+     
+    },
   },
 });

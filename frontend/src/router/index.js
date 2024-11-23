@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useAuthStore } from "@/stores/auth"; // Import your auth store
+import { useAuthStore } from "@/stores/auth"; 
 import ResetPassword from "../views/ResetPassword.vue";
 import PasswordResetRequest from "../views/PasswordResetRequest.vue";
 

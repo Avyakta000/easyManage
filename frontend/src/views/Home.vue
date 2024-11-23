@@ -21,10 +21,6 @@
     <!-- Technologies Section -->
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
       <div class="p-4 bg-white shadow-md rounded-lg flex flex-col items-center">
-        <img src="/postgres.png" alt="PostgreSQL" class="h-10 mb-2" />
-        <p class="text-sm text-gray-700">PostgreSQL</p>
-      </div>
-      <div class="p-4 bg-white shadow-md rounded-lg flex flex-col items-center">
         <img src="/nodejs.png" alt="Node.js" class="h-10 mb-2" />
         <p class="text-sm text-gray-700">Node.js</p>
       </div>
@@ -33,12 +29,20 @@
         <p class="text-sm text-gray-700">Express</p>
       </div>
       <div class="p-4 bg-white shadow-md rounded-lg flex flex-col items-center">
+        <img src="/postgres.png" alt="PostgreSQL" class="h-10 mb-2" />
+        <p class="text-sm text-gray-700">PostgreSQL</p>
+      </div>
+      <div class="p-4 bg-white shadow-md rounded-lg flex flex-col items-center">
         <img src="/prisma.png" alt="Prisma" class="h-10 mb-2" />
         <p class="text-sm text-gray-700">Prisma</p>
       </div>
       <div class="p-4 bg-white shadow-md rounded-lg flex flex-col items-center">
         <img src="/vuejs.png" alt="Vue.js" class="h-10 mb-2" />
         <p class="text-sm text-gray-700">Vue.js</p>
+      </div>
+      <div class="p-4 bg-white shadow-md rounded-lg flex flex-col items-center">
+        <img src="/jwt.png" alt="Vue.js" class="h-10 mb-2" />
+        <p class="text-sm text-gray-700">JsonWebToken</p>
       </div>
     </div>
 
