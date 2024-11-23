@@ -1,8 +1,8 @@
 <template>
   <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
     <router-link to="/">
-      <span class="text-2xl font-semibold text-indigo-600">Esay</span>
-      <span class="text-xl font-medium text-gray-600">Manage</span>
+      <span class="text-2xl font-semibold text-indigo-600">Easy</span>
+      <span class="text-xl font-medium text-gray-700">Manage</span>
     </router-link>
     <router-link
       v-if="currentUser?.role === 'ADMIN'"
