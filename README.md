@@ -3,6 +3,8 @@
 ## Overview
 
 This project is a management application designed to handle user management. It features a backend built with Node.js/Express and a frontend developed using Vue.js. The platform allows administrators to invite users, update profiles, and manage resources efficiently while users still accessing the application and perform invites, changing their details and updating their passwords.
+
+---
 Note:Reachout (html78910@gmail.com to use admin view)
 
 ---
