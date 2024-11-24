@@ -180,7 +180,7 @@ const resetRequest = async (req, res, next) => {
 
     const resetHtml = `
       <p>This request has been made to reset credentials associated with this account <strong>${email}</strong></p>
-      <p>Please click the following link to reset your password:</p>
+      <p>Please click the following link to reset your password</p>
       <a href="${process.env.CLIENT_URL}/reset-password?token=${resetToken}">Reset Password</a>
     `;
     // Send reset email
@@ -279,7 +279,7 @@ const inviteNewUser = async (req, res, next) => {
 
     await sendEmail(
       email, // Recipient email
-      "Invitation to Join Our Platform", // Subject
+      "Invitation to Join Our Platform (Easy Manage)", // Subject
       invitationEmailHtml, // Email body (HTML)
       next
     );

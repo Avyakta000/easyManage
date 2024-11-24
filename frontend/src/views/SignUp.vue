@@ -94,7 +94,7 @@
         >
         <router-link
         to="/reset-request"
-        class="block px-4 py-2 rounded-lg hover:text-blue-600 underline"
+        class="block px-4 py-2 rounded-lg hover:text-indigo-600 underline"
       >
         Forget Password ?
       </router-link>

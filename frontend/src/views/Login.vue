@@ -59,12 +59,12 @@
 
       <p class="mt-4 text-center text-gray-600">
         Don't have an account?
-        <router-link to="/signup" class="text-blue-500 hover:text-blue-600"
+        <router-link to="/signup" class="text-indigo-500 hover:text-indigo-600"
         >Sign Up</router-link
         >
         <router-link
         to="/reset-request"
-        class="block px-4 py-2 rounded-lg hover:text-blue-600 underline"
+        class="block px-4 py-2 rounded-lg hover:text-indigo-600 underline"
       >
         Forget Password ?
       </router-link>
