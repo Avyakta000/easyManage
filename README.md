@@ -1,4 +1,5 @@
 # Easy Manage
+![Screenshot 2024-11-25 032216](https://github.com/user-attachments/assets/7e581f9f-d991-4ff7-902a-80b185656dae)
 
 ## Overview
 
@@ -32,7 +33,7 @@ Note:Reachout (html78910@gmail.com to use admin view)
 - **Admin Panel**:
   - Admin users can manage users.
   - Admin users can assign different roles.
-  ![Screenshot 2024-11-24 123206](https://github.com/user-attachments/assets/ace8e0d8-f89f-4e4f-b792-a08147e2e015)
+  ![Screenshot 2024-11-25 032149](https://github.com/user-attachments/assets/a5737b3f-8515-4122-8bac-e485aaae2c67)
 
 - **API Endpoints (basic)**:
   - `/api/users` - Fetch, update, and delete users.
