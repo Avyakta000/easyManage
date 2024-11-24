@@ -4,7 +4,7 @@
     <p>Manage users and resources here.</p>
 
     <!-- Search Box with Submit Button -->
-    <div class="mb-4">
+    <div class="mb-4 flex items-center justify-start">
       <input
         type="text"
         v-model="searchQuery"
@@ -13,10 +13,10 @@
       />
       <button
         @click="searchUsers"
-        class="bg-indigo-600 text-white p-2 mt-2 mx-2 w-full md:w-auto rounded"
+        class="bg-indigo-600 text-white p-2 mx-2 rounded"
       >
-        Search
-      </button>
+      <MagnifyingGlassIcon class="w-6 h-6"/>
+    </button>
     </div>
 
     <!-- Two Sections -->
@@ -59,11 +59,13 @@
 import UserInfo from "@/components/UserInfo.vue";
 import { ref, onMounted } from "vue";
 import { useUserStore } from "@/stores/userStore";
+import { MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "Admin",
   components: {
     UserInfo,
+    MagnifyingGlassIcon
   },
   setup() {
     const userStore = useUserStore();

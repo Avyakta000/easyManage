@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full flex-col justify-center items-center bg-gray-700 rounded-lg">
+  <div class="flex h-full flex-col justify-center items-center bg-gray-700 rounded-lg px-4">
 
     <h2 class="text-2xl font-bold text-gray-50 mb-4">Change Password</h2>
     <form @submit.prevent="changePassword" class="w-full">
@@ -10,7 +10,7 @@
           <input
             v-model="password.currentPassword"
             type="password"
-            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Enter current password"
           />
         </div>
@@ -21,7 +21,7 @@
           <input
             v-model="password.newPassword"
             type="password"
-            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Enter new password"
           />
         </div>
@@ -32,7 +32,7 @@
           <input
             v-model="password.confirmPassword"
             type="password"
-            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Confirm new password"
           />
         </div>
@@ -41,7 +41,7 @@
         <!-- Submit Button -->
         <button
           type="submit"
-          class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+          class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
           :disabled="isLoading"
         >
           {{isLoading ? "updating..." : "Change Password"}}

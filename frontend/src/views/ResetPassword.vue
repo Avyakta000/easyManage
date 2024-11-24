@@ -2,7 +2,7 @@
     <div>
       <!-- Header -->
       <div class="h-[10vh] text-center bg-gray-800 space-x-1 p-2">
-        <span class="text-2xl font-semibold text-indigo-600">Esay</span>
+        <span class="text-2xl font-semibold text-indigo-600">Easy</span>
         <span class="text-xl font-medium text-gray-600">Manage</span>
       </div>
   

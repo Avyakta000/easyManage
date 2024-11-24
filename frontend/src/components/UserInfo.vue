@@ -32,7 +32,7 @@
 
     <div class="mt-6 flex space-x-4">
       <button v-if="!isEditing" @click="startEditing">
-        <PencilSquareIcon class="h-6 w-6 text-blue-500" />
+        <PencilSquareIcon class="h-6 w-6 text-indigo-500" />
       </button>
       <button v-if="isEditing" @click="saveChanges" class="px-4 py-2 bg-green-600 text-white rounded">
         Save Changes

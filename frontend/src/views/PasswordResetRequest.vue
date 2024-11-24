@@ -1,7 +1,7 @@
 <template>
   <div class="h-[10vh] flex justify-center items-center space-x-1 p-4">
     <router-link to="/">
-      <span class="text-2xl font-semibold text-indigo-600">Esay</span>
+      <span class="text-2xl font-semibold text-indigo-600">Easy</span>
       <span class="text-xl font-medium text-gray-600">Manage</span>
     </router-link>
     <router-link

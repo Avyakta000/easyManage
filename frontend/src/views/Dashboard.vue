@@ -4,7 +4,7 @@
     <Sidebar />
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col ml-64">
+    <div class="flex-1 flex flex-col  lg:ml-64">
       <!-- Header -->
       <Header :openInviteModal="openInviteModal" />
 
@@ -12,7 +12,7 @@
       <main class="flex-1 p-6">
         <div v-if="isDashboardRoute" class="space-y-6">
           <!-- Welcome Section -->
-          <div class="bg-gray-800 text-white p-8 rounded-md shadow-lg mb-6">
+          <div class="bg-gray-700 text-white p-8 rounded-md shadow-lg mb-6">
             <h1 class="text-4xl font-bold">Welcome to Easy Manage</h1>
             <p class="text-lg mt-2">
               Streamline your account management and explore all features with

@@ -1,24 +1,31 @@
 <template>
-  <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
-    <router-link to="/">
+  <header class="flex items-center justify-between px-6 py-4 bg-white shadow lg:flex-row flex-col">
+    <!-- Logo -->
+    <router-link to="/" class="flex items-center mb-4 space-x-1 lg:mb-0">
       <span class="text-2xl font-semibold text-indigo-600">Easy</span>
-      <span class="text-xl font-medium text-gray-700">Manage</span>
+      <span class="text-xl font-medium text-gray-800">Manage</span>
     </router-link>
+
+    <!-- Dashboard Link (visible for Admin) -->
     <router-link
       v-if="currentUser?.role === 'ADMIN'"
       to="/dashboard"
-      class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300"
+      class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 mb-4 lg:mb-0"
     >
       Go to Dashboard
     </router-link>
-    <!-- <h1 class="text-xl font-semibold text-gray-800">DASHBOARD</h1> -->
-    <div class="flex items-center">
-      <span class="mr-4 text-lg"
-        ><span class="text-indigo-500 font-semibold">Hi, </span>{{ currentUser ? currentUser?.fullName : "Guest" }}</span
-      >
+
+    <!-- User Info & Invite Button -->
+    <div class="flex items-center justify-around">
+      <!-- Display User's Name and Greeting -->
+      <span class="mr-4 text-lg">
+        <span class="text-indigo-500 font-semibold">Hi, </span>{{ currentUser ? currentUser?.fullName : "Guest" }}
+      </span>
+
+      <!-- Invite User Button -->
       <button
         @click="openInviteModal"
-        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+        class="px-4 py-2 font-semibold bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 mr-4"
       >
         Invite a User
       </button>
@@ -40,8 +47,13 @@ export default {
     const authStore = useAuthStore();
     const currentUser = authStore?.user;
 
+    const handleLogout = () => {
+      authStore.logout(); // Call logout function (assuming it's defined in the auth store)
+    };
+
     return {
       currentUser,
+      handleLogout,
     };
   },
 };
