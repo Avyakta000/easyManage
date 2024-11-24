@@ -83,9 +83,14 @@ Note:Reachout (html78910@gmail.com to use admin view)
    ```bash
    cd backend
    npm install
+   
+3. **Setup Prisma ORM**:
+   ```bash
+   npx prisma init
 
-3. **Setup the backend**:
+4. **Setup env Configuration**:
    create .env file in your project's root and define the following variables
+   Note: Database URL is manadatory for the next step
 
    PORT:'5000'
    JWT_SECRET='xyz-secret'
@@ -93,6 +98,18 @@ Note:Reachout (html78910@gmail.com to use admin view)
    EMAIL_HOST_USER="xyz@easymanage.com"
    EMAIL_HOST_PASSWORD="your provider's app password"
    CLIENT_URL='http://localhost:5173'
+
+5. **Setup Prisma ORM**:
+   ```bash
+   npx prisma db pull 
+
+6. **Finally, Run the Backend**:
+   ```bash
+   npm run dev
+   
+7. **Use this if you have made any changes in (Models) prisma.schema**:
+   ```bash
+   npx prisma generate
 
 ## Technologies Used
    **Node.js Express PostgreSql Prisma Vue.js**
