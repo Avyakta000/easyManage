@@ -8,7 +8,7 @@ This project is a management application designed to handle user management. It 
 Note:Reachout (html78910@gmail.com to use admin view)
 
 ---
-![Screenshot 2024-11-24 122754](https://github.com/user-attachments/assets/438590f3-6323-4fe6-abdb-8c98bdabdbac)
+![Screenshot 2024-11-25 030610](https://github.com/user-attachments/assets/7a421ef7-ea6b-4951-a3e3-0838ec7d76b0)
 
 ## Table of Contents
 
