@@ -29,7 +29,8 @@ This project is a management application designed to handle user management. It 
 - **Admin Panel**:
   - Admin users can manage users.
   - Admin users can assign different roles.
-  
+  ![Screenshot 2024-11-24 123206](https://github.com/user-attachments/assets/ace8e0d8-f89f-4e4f-b792-a08147e2e015)
+
 - **API Endpoints (basic)**:
   - `/api/users` - Fetch, update, and delete users.
   - `/api/auth/invite` - Send Invites.
