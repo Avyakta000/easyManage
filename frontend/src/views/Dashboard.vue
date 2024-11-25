@@ -211,10 +211,10 @@ export default {
       return route.path === "/dashboard";
     });
 
-    onMounted(async () => {
-      await userStore.fetchUsers();
-      console.log(users, "dash");
-    });
+    // onMounted(async () => {
+    //   await userStore.fetchUsers();
+    //   console.log(users, "dash");
+    // });
 
     // Open Invite User Modal
     const openInviteModal = () => {

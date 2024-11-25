@@ -37,7 +37,7 @@ export const useUserStore = defineStore("user", {
         }
       } catch (err) {
         this.error = err.response?.data?.error || "Failed to send invite";
-        console.log(this.error, err?.response?.data?.error , 'faild')
+        console.log(this.error, err?.response?.data?.error , 'failed')
         toast.error(this.error);
       } finally {
         this.isLoading = false;

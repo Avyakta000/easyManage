@@ -7,7 +7,7 @@
           v-model="inviteEmail"
           type="email"
           placeholder="Enter email"
-          class="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
         <div class="flex justify-end">

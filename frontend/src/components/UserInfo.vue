@@ -10,19 +10,19 @@
       <label class="block">Name</label>
       <input
         v-model="editableUser.fullName"
-        class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
 
       <label class="block mt-4">Email</label>
       <input
         v-model="editableUser.email"
-        class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
 
       <label class="block mt-4">Role</label>
       <select
         v-model="editableUser.role"
-        class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full mt-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
       >
         <option value="" disabled>Select Role</option>
         <option value="ADMIN">Admin</option>
@@ -30,9 +30,9 @@
       </select>
     </div>
 
-    <div class="mt-6 flex space-x-4">
+    <div class="mt-6 flex space-x-4 text-[10px] md:text-base">
       <button v-if="!isEditing" @click="startEditing">
-        <PencilSquareIcon class="h-6 w-6 text-indigo-500" />
+        <PencilSquareIcon class="h-6 w-6 text-indigo-600" />
       </button>
       <button v-if="isEditing" @click="saveChanges" class="px-4 py-2 bg-green-600 text-white rounded">
         Save Changes

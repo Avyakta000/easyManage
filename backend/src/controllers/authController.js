@@ -189,7 +189,7 @@ const resetRequest = async (req, res, next) => {
     res.status(200).json({ message: 'Password reset email sent' });
   } catch (error) {
     console.error(error);
-    next('An error occurred');
+    next(error);
   }
 };
 
@@ -245,6 +245,17 @@ const inviteNewUser = async (req, res, next) => {
       res.status(400); // You can set the status here
       throw new Error("Please provide a valid Email");
     }
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    // user exists
+    if (user) {
+      console.log('invite present')
+      res.status(400);
+      throw new Error("Already a Member");
+    }
     // Generate a random password
     const password = Math.random().toString(36).slice(-8);
 
@@ -270,10 +281,12 @@ const inviteNewUser = async (req, res, next) => {
     // Send invitation email
     const invitationEmailHtml = `
       <p>You have been invited by ${from_email} to join Easy Manage.</p>
-      <p><strong>Your Credentials:</strong></p>
+      <p>Login here <a href="${process.env.CLIENT_URL}/login</a> <strong>Your Credentials</strong></p>
       <p>Email: ${email}</p>
       <p>Password: ${password}</p>
-      <p>Please click the following link to set a new password or log in:</p>
+      <br/>
+      <p>Or, if you want to reset your passwordp>
+      <p>Please click the following link to set a new password or log in</p>
       <a href="${process.env.CLIENT_URL}/reset-password?token=${invitationToken}">Reset Password</a>
     `;
 
@@ -287,7 +300,7 @@ const inviteNewUser = async (req, res, next) => {
     res.status(201).json({ message: "User invited successfully" });
   } catch (error) {
     console.error("Error inviting user:", error);
-    next("Failed to invite user");
+    next(error)
   }
 };
 

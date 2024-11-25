@@ -89,10 +89,15 @@ export default {
       e.preventDefault();
       await auth.login(email.value, password.value);
 
-      if (auth.isAuthenticated && auth.user.role === "USER") {
-        router.push("/dashboard");
-      } else if (auth.isAuthenticated && auth.user.role === "ADMIN") {
-        router.push("/dashboard/admin");
+      if (auth.isAuthenticated) {
+        // If the user is authenticated, check the redirect query parameter
+        const userRedirectPath = router.currentRoute.value.query.redirect || '/dashboard'; // default to '/dashboard' if no redirect
+        const adminRedirectPath = router.currentRoute.value.query.redirect || '/dashboard/admin'; // default to '/dashboard/admin' if no redirect
+        if (auth.user.role === "USER") {
+          router.push(userRedirectPath); // redirect to the originally requested path
+        } else if (auth.user.role === "ADMIN") {
+          router.push(adminRedirectPath); 
+        }
       }
     };
 

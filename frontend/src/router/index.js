@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useAuthStore } from "@/stores/auth"; 
+import { useAuthStore } from "@/stores/auth";
 import ResetPassword from "../views/ResetPassword.vue";
 import PasswordResetRequest from "../views/PasswordResetRequest.vue";
+import { useRouter } from "vue-router";
 
+import axios from "axios";
 const routes = [
   {
     path: "/",
@@ -48,14 +50,14 @@ const routes = [
     ],
   },
   {
-    path: '/reset-password',
-    name: 'ResetPassword',
+    path: "/reset-password",
+    name: "ResetPassword",
     component: ResetPassword,
     props: (route) => ({ token: route.query.token }),
   },
   {
-    path: '/reset-request',
-    name: 'PasswordResetRequest',
+    path: "/reset-request",
+    name: "PasswordResetRequest",
     component: PasswordResetRequest,
   },
 ];
@@ -65,49 +67,54 @@ const router = createRouter({
   routes,
 });
 
-// Global beforeEach guard
 router.beforeEach(async (to, from, next) => {
-  const authStore = useAuthStore();
+  const authStore = useAuthStore(); 
+  const router = useRouter();
 
-  // if the route requires authentication, ensure the user is logged in
-  if (to.meta.requiresAuth) {
-    // check if authentication is already verified
-    if (!authStore.isAuthenticated) {
-      try {
-        // call /me to verify authentication
-        console.log("to check on page refreshes on requiresAuth path it checks current user");
-        await authStore.verifyAuth(); 
-      } catch (error) {
-        console.error("Failed to verify authentication:", error);
-        return next({ name: "Login", query: { redirect: to.fullPath } });
-      }
+  // **Check if the route requires authentication** (authenticated user needed)
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    console.log("User is not authenticated, redirecting to login");
+    try {
+      // verify authentication by calling the backend API (this step ensures the user is still logged in after a page refresh)
+      console.log("Verifying authentication on page refresh for requiresAuth paths...");
+      const response = await axios.get("/api/auth/me");
+      authStore.user = response.data;
+      console.log("User authenticated, proceeding to the requested route.");
+    } catch (err) {
+      console.error("Failed to verify authentication:", err.response?.data?.message || err);
+      // redirect to login if authentication check fails
+      return next({ name: "Login", query: { redirect: to.fullPath } });
     }
   }
 
-  // redirect to login if the user is not authenticated
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    console.log("if token goes missing, refresh the page, redirect to login");
-    return next({ name: "Login", query: { redirect: to.fullPath } });
-  }
-
-  // if the route requires a guest user (not authenticated), redirect to Dashboard if already logged in
-  if (to.meta.requiresGuest && authStore.isAuthenticated) {
-    return next({ name: "Dashboard" });
-  }
-
-  // admin access control for the /dashboard/admin route
+  // **Admin access control** for routes like /dashboard/admin
   if (to.meta.requiresAdmin) {
     const currentUser = authStore.user;
-
-    // if the current user is not an admin, redirect to regular dashboard
     if (currentUser && currentUser.role !== "ADMIN") {
-      console.log("unauthorized !!!");
-      return next({ name: "Dashboard" }); // redirect non-admins to the Dashboard
+      console.log("Unauthorized access to admin route, redirecting to regular dashboard");
+      return next({ name: "Dashboard" }); // redirect non-admin users to regular dashboard
     }
   }
 
-  // allow navigation to the intended route
+  if (to.meta.requiresGuest  && !router.currentRoute.value.query.redirect ) {
+
+    try {
+      // verify authentication by calling the backend API (this step ensures the user is still logged in after a page refresh)
+      console.log("Verifying authentication on page refresh for requiresAuth paths...");
+      const response = await axios.get("/api/auth/me");
+      authStore.user = response.data;
+      console.log("User authenticated, proceeding to the requested route.");
+      return next({ name: "Dashboard" }); // Redirect authenticated users to the dashboard
+    } catch (err) {
+      console.error("Failed to verify authentication:", err.response?.data?.message || err);
+      // redirect to login if authentication check fails
+      // return next({ name: "Login", query: { redirect: to.fullPath } });
+    }
+  }
+  // proceed to the requested route
+  console.log("Navigating to:", to.name, to.meta);
   next();
 });
+
 
 export default router;
