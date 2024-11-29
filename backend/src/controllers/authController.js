@@ -101,7 +101,13 @@ const login = async (req, res, next) => {
 // logout
 const logout = async (req, res, next) => {
   try {
-    res.clearCookie("jwt_auth");
+    res.clearCookie("jwt_auth", {
+      httpOnly: true, // Match the attributes
+      secure: process.env.NODE_ENV !== "development", // Match secure flag
+      sameSite: "strict", // Match SameSite
+      domain: process.env.DOMAIN, // Match domain
+      path: "/", // Match path
+    });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     next(error);

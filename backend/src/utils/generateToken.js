@@ -10,7 +10,7 @@ const generateToken = (userId, res) => {
     httpOnly: true, // prevent XSS
     sameSite: "strict", // prevent CSRF (Cross-Site Request Forgery)
     secure: process.env.NODE_ENV !== "development", // ensure cookie is sent only over HTTPS in production
-    // domain: process.env.DOMAIN,
+    domain: process.env.DOMAIN,
   });
 
   return token;
