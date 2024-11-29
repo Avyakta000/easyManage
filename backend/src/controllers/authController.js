@@ -101,7 +101,7 @@ const login = async (req, res, next) => {
 // logout
 const logout = async (req, res, next) => {
   try {
-    res.clearCookie("jwt");
+    res.clearCookie("jwt_auth");
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     next(error);

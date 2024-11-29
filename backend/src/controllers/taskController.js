@@ -132,7 +132,6 @@ exports.getDashboardStats = async (req, res, next) => {
     const totalTasks = await prisma.task.count({
       where: { userId: req.user.id },
     });
-
     // pompleted tasks
     const completedTasks = await prisma.task.count({
       where: { userId: req.user.id, status: "FINISHED" },
