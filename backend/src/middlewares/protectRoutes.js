@@ -3,7 +3,7 @@ const prisma = require("../db/prisma.js");
 
 const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt_auth;
 
     if (!token) {
       res.status(401);
