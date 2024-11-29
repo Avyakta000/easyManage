@@ -9,7 +9,8 @@ const generateToken = (userId, res) => {
     maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
     httpOnly: true, // prevent XSS
     sameSite: "strict", // prevent CSRF (Cross-Site Request Forgery)
-    secure: process.env.NODE_ENV !== "development" // ensure cookie is sent only over HTTPS in production
+    secure: process.env.NODE_ENV !== "development", // ensure cookie is sent only over HTTPS in production
+    domain: process.env.DOMAIN,
   });
 
   return token;

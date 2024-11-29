@@ -88,7 +88,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // **Admin access control** for routes like /dashboard/admin
-  if (to.meta.requiresAdmin) {
+  if (to.meta.requiresAdmin){
     const currentUser = authStore.user;
     if (currentUser && currentUser.role !== "ADMIN") {
       console.log("Unauthorized access to admin route, redirecting to regular dashboard");

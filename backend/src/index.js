@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
+const taskRoutes = require("./routes/taskRoute");
 
 const { config } = require("dotenv");
 const { errorHandler, notFound } = require("./middlewares/errorHandler");
@@ -18,6 +19,7 @@ app.use(express.json()); // parse application/json
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
 
 // error handling middleware (this should be the last middleware)
 app.use(notFound);
