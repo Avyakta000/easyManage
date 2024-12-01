@@ -23,12 +23,6 @@
       <span class="mr-4 text-lg">
         <span class="text-indigo-500 font-semibold">Hi, </span>{{ currentUser ? currentUser?.fullName : "Guest" }}
       </span>
-
-      <a
-      href='https://timly.quicklit.in/dashboard'      class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300 mb-4 lg:mb-0"
-    >
-      Go back to <span class="font-bold">timly</span>
-    </a>
       <!-- Invite User Button -->
       <button
         @click="openInviteModal"

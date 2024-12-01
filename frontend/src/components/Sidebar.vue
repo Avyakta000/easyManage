@@ -6,28 +6,34 @@
       class="lg:hidden z-40 fixed top-4 left-4 text-white p-2 bg-gray-900 rounded-md"
     >
       <!-- Hero Icon: Menu Alt 3 -->
-      <Bars2Icon class="h-6 w-6"/>
+      <Bars2Icon class="h-6 w-6" />
     </button>
 
     <!-- Sidebar -->
     <aside
-      :class="[ 
-        'fixed inset-0 h-screen w-64 bg-blue-600 text-white flex flex-col shadow-lg', 
-        isSidebarOpen ? 'hidden' : 'block', 
-        'lg:block' 
+      :class="[
+        'fixed inset-0 h-screen w-64 bg-blue-600 text-white flex flex-col shadow-lg',
+        isSidebarOpen ? 'hidden' : 'block',
+        'lg:block',
       ]"
     >
-
-    <div class="bg-blue-700 text-center p-2">Menu</div>
+      <div class="bg-blue-700 text-center p-2">Menu</div>
       <!-- Navigation Section -->
       <nav class="flex-1 px-4 py-6 space-y-4 mt-10">
+        <a
+          href="https://timly.quicklit.in/dashboard"
+          class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-blue-500 transition"
+        >
+          <ArrowLeftIcon class="h-6 w-6" /> <span class="font-semibold">timly</span>
+        </a>
         <router-link
           v-if="isAdmin"
           to="/dashboard/admin"
           class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-blue-500 transition"
           exact-active-class="bg-blue-800"
         >
-          <HomeIcon class="h-6 w-6" /> <!-- Admin Home Icon -->
+          <HomeIcon class="h-6 w-6" />
+          <!-- Admin Home Icon -->
           <span>Admin</span>
         </router-link>
 
@@ -37,7 +43,8 @@
           class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-blue-500 transition"
           exact-active-class="bg-blue-800"
         >
-          <HomeIcon class="h-6 w-6" /> <!-- Home Icon -->
+          <HomeIcon class="h-6 w-6" />
+          <!-- Home Icon -->
           <span>Home</span>
         </router-link>
 
@@ -46,7 +53,8 @@
           class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-blue-500 transition"
           exact-active-class="bg-blue-800"
         >
-          <UserIcon class="h-6 w-6" /> <!-- Profile Icon -->
+          <UserIcon class="h-6 w-6" />
+          <!-- Profile Icon -->
           <span>Profile</span>
         </router-link>
 
@@ -55,7 +63,8 @@
           class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-blue-500 transition"
           exact-active-class="bg-blue-800"
         >
-          <LockClosedIcon class="h-6 w-6" /> <!-- Password Change Icon -->
+          <LockClosedIcon class="h-6 w-6" />
+          <!-- Password Change Icon -->
           <span>Password</span>
         </router-link>
 
@@ -70,11 +79,15 @@
       </nav>
 
       <!-- Footer Section -->
-      <footer class="px-4 fixed bottom-0 w-64 py-4 bg-gray-900 text-center border-t border-blue-500">
+      <footer
+        class="px-4 fixed bottom-0 w-64 py-4 bg-gray-900 text-center border-t border-blue-500"
+      >
         <div class="text-sm flex flex-col">
           <span>© {{ currentYear }} Easy Manage</span>
           <div class="flex items-center space-x-2 justify-center p-2">
-            <span class="italic">Developed by</span> <CodeBracketIcon class="w-5 h-5"/> <span class="font-semibold">Himanshu</span>
+            <span class="italic">Developed by</span>
+            <CodeBracketIcon class="w-5 h-5" />
+            <span class="font-semibold">Himanshu</span>
           </div>
         </div>
       </footer>
@@ -86,7 +99,15 @@
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { HomeIcon, UserIcon, LockClosedIcon, ArrowRightCircleIcon, Bars2Icon, CodeBracketIcon, CodeBracketSquareIcon } from "@heroicons/vue/24/outline";
+import {
+  HomeIcon,
+  UserIcon,
+  LockClosedIcon,
+  ArrowRightCircleIcon,
+  Bars2Icon,
+  CodeBracketIcon,
+  ArrowLeftIcon,
+} from "@heroicons/vue/24/outline";
 
 export default {
   name: "Sidebar",
@@ -97,6 +118,7 @@ export default {
     ArrowRightCircleIcon,
     Bars2Icon,
     CodeBracketIcon,
+    ArrowLeftIcon,
   },
 
   setup() {
