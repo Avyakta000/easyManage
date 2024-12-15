@@ -11,7 +11,7 @@ const signup = async (req, res, next) => {
 
     // missing fields case 1
     if (!fullName || !email || !password || !confirmPassword) {
-      res.status(400); 
+      res.status(400);
       throw new Error("Please fill in all fields");
     }
 
@@ -65,7 +65,7 @@ const signup = async (req, res, next) => {
 // login
 const login = async (req, res, next) => {
   try {
-    console.log('login hit')
+    console.log("login hit");
     const { email, password } = req.body;
     const user = await prisma.user.findFirst({
       where: {
@@ -91,7 +91,7 @@ const login = async (req, res, next) => {
       id: user.id,
       fullName: user.fullName,
       email: user.email,
-      role: user.role
+      role: user.role,
     });
   } catch (error) {
     next(error);
@@ -137,8 +137,8 @@ const getMe = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
   const { currentPassword, newPassword } = req.body;
-  const userId = req.user.id; 
-  
+  const userId = req.user.id;
+
   try {
     // Find the user by their ID
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -148,7 +148,10 @@ const changePassword = async (req, res, next) => {
     }
 
     // Verify the old password
-    const isOldPasswordCorrect = await bcryptjs.compare(currentPassword, user.password);
+    const isOldPasswordCorrect = await bcryptjs.compare(
+      currentPassword,
+      user.password
+    );
     if (!isOldPasswordCorrect) {
       res.status(400);
       throw new Error("Old password is incorrect");
@@ -176,13 +179,17 @@ const resetRequest = async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user){
+    if (!user) {
       res.status(404);
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     // Generate a reset token with user id and email, expires in 15 minutes
-    const resetToken = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    const resetToken = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
 
     const resetHtml = `
       <p>This request has been made to reset credentials associated with this account <strong>${email}</strong></p>
@@ -190,9 +197,9 @@ const resetRequest = async (req, res, next) => {
       <a href="${process.env.CLIENT_URL}/reset-password?token=${resetToken}">Reset Password</a>
     `;
     // Send reset email
-    await sendEmail(email,  "Forget Password", html=resetHtml, next);
+    await sendEmail(email, "Forget Password", (html = resetHtml), next);
 
-    res.status(200).json({ message: 'Password reset email sent' });
+    res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
     console.error(error);
     next(error);
@@ -203,7 +210,7 @@ const resetRequest = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   const { token } = req.params;
   const { password } = req.body;
-  console.log(password,' pass res')
+  console.log(password, " pass res");
 
   try {
     // Verify the token
@@ -218,33 +225,35 @@ const resetPassword = async (req, res, next) => {
       data: { password: hashedPassword },
     });
 
-    res.status(200).json({ message: 'Password has been reset successfully' });
-  }catch (error) {
-    console.error('Error in resetPassword:', error);
+    res.status(200).json({ message: "Password has been reset successfully" });
+  } catch (error) {
+    console.error("Error in resetPassword:", error);
 
     // Custom error handling for TokenExpiredError
-    if (error.name === 'TokenExpiredError') {
+    if (error.name === "TokenExpiredError") {
       res.status(400);
-      next(new Error('Token has expired. Please request a new password reset.'))
+      next(
+        new Error("Token has expired. Please request a new password reset.")
+      );
     }
-    
+
     // Custom error handling for invalid token
-    if (error.name === 'JsonWebTokenError') {
+    if (error.name === "JsonWebTokenError") {
       res.status(400);
-      next(new Error('Invalid token. Please request a new password reset.'))
+      next(new Error("Invalid token. Please request a new password reset."));
     }
 
     // Generic server error
-    next('An error occurred while resetting the password.');
+    next("An error occurred while resetting the password.");
   }
 };
 
 // new invites
 const inviteNewUser = async (req, res, next) => {
-  console.log('invite hit')
+  console.log("invite hit");
   const { email } = req.body;
   // Sender email
-  const from_email=  req.user.email;
+  const from_email = req.user.email;
 
   try {
     if (!email) {
@@ -258,7 +267,7 @@ const inviteNewUser = async (req, res, next) => {
     });
     // user exists
     if (user) {
-      console.log('invite present')
+      console.log("invite present");
       res.status(400);
       throw new Error("Already a Member");
     }
@@ -271,7 +280,7 @@ const inviteNewUser = async (req, res, next) => {
     // Create the new user
     const newUser = await prisma.user.create({
       data: {
-        fullName:"",
+        fullName: "",
         email,
         password: hashedPassword,
       },
@@ -281,20 +290,26 @@ const inviteNewUser = async (req, res, next) => {
     const invitationToken = jwt.sign(
       { email: newUser.email, id: newUser.id },
       process.env.JWT_SECRET,
-      { expiresIn: '15m' }
+      { expiresIn: "15m" }
     );
 
     // Send invitation email
     const invitationEmailHtml = `
-      <p>You have been invited by ${from_email} to join Easy Manage.</p>
-      <p>Login here <a href="${process.env.CLIENT_URL}/login</a> <strong>Your Credentials</strong></p>
-      <p>Email: ${email}</p>
-      <p>Password: ${password}</p>
-      <br/>
-      <p>Or, if you want to reset your passwordp>
-      <p>Please click the following link to set a new password or log in</p>
-      <a href="${process.env.CLIENT_URL}/reset-password?token=${invitationToken}">Reset Password</a>
-    `;
+    <p>You have been invited by <strong>${from_email}</strong> to join <strong>Easy Manage</strong>.</p>
+    <p>
+        <a href="${process.env.CLIENT_URL}/login" style="color: #1a73e8; text-decoration: none; font-weight: bold;">Login here</a> 
+        to access your account using the credentials below:
+    </p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Password:</strong> ${password}</p>
+    <br/>
+    <p>If you want to reset your password, click the link below:</p>
+    <p>
+        <a href="${process.env.CLIENT_URL}/reset-password?token=${invitationToken}" style="color: #1a73e8; text-decoration: none;">Reset Password</a>
+    </p>
+    <br/>
+    <p>Thank you,<br>The Easy Manage Team</p>
+`;
 
     await sendEmail(
       email, // Recipient email
@@ -306,7 +321,7 @@ const inviteNewUser = async (req, res, next) => {
     res.status(201).json({ message: "User invited successfully" });
   } catch (error) {
     console.error("Error inviting user:", error);
-    next(error)
+    next(error);
   }
 };
 
